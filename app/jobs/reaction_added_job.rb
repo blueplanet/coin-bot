@@ -15,7 +15,7 @@ class ReactionAddedJob < ApplicationJob
     if slack_user
       transaction = send_coin(slack_user.address)
 
-      message = "#{COINS} MOF 送金しましたよ〜\nhttps://ropsten.etherscan.io/tx/#{transaction.id}"
+      message = "<@#{user_id}> #{COINS} MOF 送金しましたよ〜\nhttps://ropsten.etherscan.io/tx/#{transaction.id}"
 
       bot.chat_postMessage(as_user: 'true', channel: channel, text: message)
     else
