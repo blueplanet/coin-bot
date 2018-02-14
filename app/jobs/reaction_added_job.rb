@@ -15,16 +15,11 @@ class ReactionAddedJob < ApplicationJob
       transaction = send_coin(slack_user.address)
 
       message = "<@#{user_id}> #{COINS} MOF 送金しましたよ〜\nhttps://ropsten.etherscan.io/tx/#{transaction.id}"
-
-      bot.chat_postMessage(as_user: 'true', channel: channel, text: message)
     else
-      bot.chat_postMessage(
-        as_user: 'true',
-        channel: channel,
-        text: "アドレスはまだ登録されていません。\n`@bot register ADDRESS`を実行して登録しましょう！"
-      )
+      message = "<@#{user_id}> イーサリアムのアドレスはまだ登録されてないようですね〜\n`/register ADDRESS`を実行して登録しましょう！"
     end
 
+    bot.chat_postMessage(as_user: 'true', channel: channel, text: message)
   end
 
   private
