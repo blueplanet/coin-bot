@@ -3,12 +3,11 @@ class ReactionAddedJob < ApplicationJob
 
   COINS = 5
 
-  def perform(team_id, api_app_id, user_id, channel)
+  def perform(team_id, user_id, channel)
     bot = Slack::Web::Client.new
 
     slack_user = SlackUser.find_by(
       team_id: team_id, 
-      api_app_id: api_app_id, 
       user_id: user_id
     )
 

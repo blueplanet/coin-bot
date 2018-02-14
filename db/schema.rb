@@ -17,12 +17,11 @@ ActiveRecord::Schema.define(version: 20180214002812) do
 
   create_table "slack_users", force: :cascade do |t|
     t.string "team_id"
-    t.string "api_app_id"
     t.string "user_id"
     t.string "address"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["team_id", "api_app_id", "user_id"], name: "index_slack_users_on_team_id_and_api_app_id_and_user_id", unique: true
+    t.index ["team_id", "user_id"], name: "index_slack_users_on_team_id_and_user_id", unique: true
   end
 
 end
