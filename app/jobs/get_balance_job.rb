@@ -1,7 +1,7 @@
 class GetBalanceJob < ApplicationJob
   queue_as :default
 
-  def perform(team_id, user_id)
+  def perform(team_id, user_id, channel)
     slack_user = SlackUser.find_by(team_id: team_id, user_id: user_id)
     bot = Slack::Web::Client.new
 
