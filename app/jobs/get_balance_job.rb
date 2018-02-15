@@ -24,6 +24,6 @@ class GetBalanceJob < ApplicationJob
       contract = Ethereum::Contract.create(client: client, name: "ERC20Token", address: ENV['ERC20_ADDRESSES'], abi: abi)
       contract.sender = key.address
 
-      contract.transact.balanceOf(address) / 10**18
+      contract.transact.balance_of(address) / 10**18
     end
 end
