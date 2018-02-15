@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
 
   resources :events, only: :create, formats: :json
-  resource :balance, only: :show
+  resources :get_balances, only: :create
   resources :slack_users, only: :create, formats: :json
 end
