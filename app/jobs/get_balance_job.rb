@@ -1,4 +1,6 @@
 class GetBalanceJob < ApplicationJob
+  include ActionView::Helpers::NumberHelper
+
   queue_as :default
 
   def perform(team_id, user_id, channel)
