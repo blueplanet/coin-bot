@@ -25,12 +25,6 @@ class ReactionAddedJob < ApplicationJob
   private
 
     def send_coin(address)
-      client = Ethereum::HttpClient.new("https://ropsten.infura.io/#{ENV['INFURA_TOKEN']}")
-      key = Eth::Key.new(priv: ENV['ERC20_OWNER_PRIVATE_KEY'])
-      abi = JSON.parse(File.open(Rails.root.join('config', 'abi', 'erc20_token.json')).read)
-      contract = Ethereum::Contract.create(client: client, name: "ERC20Token", address: ENV['ERC20_ADDRESSES'], abi: abi)
-      contract.key = key
-
-      contract.transact.transfer(address, COINS * 10**18)
+      TokenContract.instance.transact.transfer(address, COINS * 10**18)
     end
 end
