@@ -7,7 +7,7 @@ class GetBalanceJob < ApplicationJob
 
     if slack_user
       balance = get_balance(slack_user.address)
-      message = "<@#{user_id}> 残高は #{balance} MOF です〜"
+      message = "<@#{user_id}> 残高は #{number_to_delimited balance} MOF です〜"
     else
       message = "<@#{user_id}> アドレスはまだ登録されてないようです〜\n/register ADDRESSで登録しましょう！"
     end
