@@ -1,6 +1,4 @@
 class GetBalanceJob < ApplicationJob
-  include ActionView::Helpers::NumberHelper
-
   queue_as :default
 
   def perform(team_id, user_id, channel)
@@ -9,7 +7,7 @@ class GetBalanceJob < ApplicationJob
 
     if slack_user
       balance = get_balance(slack_user.address)
-      message = "<@#{user_id}> 残高は #{number_to_delimited balance} MOF です〜"
+      message = "<@#{user_id}> 残高は #{balance.to_s :delimited} MOF です〜"
     else
       message = "<@#{user_id}> アドレスはまだ登録されてないようです〜\n/register ADDRESSで登録しましょう！"
     end
