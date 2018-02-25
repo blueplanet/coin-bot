@@ -4,8 +4,6 @@ class ReactionAddedJob < ApplicationJob
   COINS = 5
 
   def perform(team_id, user_id, channel)
-    bot = Slack::Web::Client.new
-
     slack_user = SlackUser.find_by(
       team_id: team_id, 
       user_id: user_id
@@ -19,7 +17,7 @@ class ReactionAddedJob < ApplicationJob
       message = "<@#{user_id}> イーサリアムのアドレスはまだ登録されてないようですね〜\n`/register ADDRESS`を実行して登録しましょう！"
     end
 
-    bot.chat_postMessage(as_user: 'true', channel: channel, text: message)
+    SlackBot.instance.send_message(channel: channel, message: message)
   end
 
   private

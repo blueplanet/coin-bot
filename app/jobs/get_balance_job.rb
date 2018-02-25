@@ -3,7 +3,6 @@ class GetBalanceJob < ApplicationJob
 
   def perform(team_id, user_id, channel)
     slack_user = SlackUser.find_by(team_id: team_id, user_id: user_id)
-    bot = Slack::Web::Client.new
 
     if slack_user
       balance = get_balance(slack_user.address)
@@ -12,7 +11,7 @@ class GetBalanceJob < ApplicationJob
       message = "<@#{user_id}> アドレスはまだ登録されてないようです〜\n/register ADDRESSで登録しましょう！"
     end
 
-    bot.chat_postMessage(as_user: 'true', channel: channel, text: message)
+    SlackBot.instance.send_message(channel: channel, message: message)
   end
 
   private

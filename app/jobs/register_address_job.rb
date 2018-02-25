@@ -7,8 +7,6 @@ class RegisterAddressJob < ApplicationJob
       user_id: user_id
     )
 
-    bot = Slack::Web::Client.new
-
     if slack_user.new_record?
       if Eth::Utils.valid_address?(address)
         slack_user.address = address
@@ -22,6 +20,6 @@ class RegisterAddressJob < ApplicationJob
       message = "<@#{user_id}> 既に下記アドレスで登録済みです〜\n`#{slack_user.address}`"
     end
 
-    bot.chat_postMessage(as_user: 'true', channel: channel, text: message)
+    SlackBot.instance.send_message(channel: channel, message: message)
   end
 end
