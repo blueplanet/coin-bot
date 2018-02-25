@@ -15,7 +15,7 @@ class EventsController < ActionController::API
 
       head :ok
     when 'message'
-      if params[:event][:text].start_with?("#{ENV['SLACK_BOT_USER_ID'])} ")
+      if params[:event][:text].start_with?("#{ENV['SLACK_BOT_USER_ID']} ")
         SlackCommandJob.perform_later(
           params[:team_id],
           params[:event][:user],
