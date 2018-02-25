@@ -11,7 +11,7 @@ class SlackCommandJob < ApplicationJob
       # message = "下記リンクをクリックし、Metamaskでサインしてください〜\n#{url}"
 
       SlackBot.instancel.send_message(channel: channel, message: 'test')
-    when 'banalance'
+    when 'balance'
       GetBalanceJob.perform_later(team_id, user, channel)
     when 'register'
       RegisterAddressJob.perform_later(team_id, user, command_args.first, channel)
