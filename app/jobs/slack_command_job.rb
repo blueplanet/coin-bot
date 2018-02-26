@@ -15,6 +15,13 @@ class SlackCommandJob < ApplicationJob
       GetBalanceJob.perform_later(team_id, user, channel)
     when 'register'
       RegisterAddressJob.perform_later(team_id, user, command_args.first, channel)
+    else
+      message = <<~EOS
+      下記のコマンド実行できます。
+      `@mof-coin register 自分のRopstenアドレス` アドレス登録
+      `@mof-coin balance` 残高表示
+      EOS
+      SlackBot.instance.send_message(channel: channel, message: message)
     end
   end
 end

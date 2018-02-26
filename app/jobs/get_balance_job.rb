@@ -8,7 +8,7 @@ class GetBalanceJob < ApplicationJob
       balance = get_balance(slack_user.address)
       message = "<@#{user_id}> 残高は #{balance.to_s :delimited} MOF です〜"
     else
-      message = "<@#{user_id}> アドレスはまだ登録されてないようです〜\n/register ADDRESSで登録しましょう！"
+      message = "<@#{user_id}> アドレスはまだ登録されてないようです〜\n`@mof-coin register 自分のRopstenアドレス` を送信して登録しましょう！"
     end
 
     SlackBot.instance.send_message(channel: channel, message: message)

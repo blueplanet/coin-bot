@@ -14,7 +14,7 @@ class ReactionAddedJob < ApplicationJob
 
       message = "<@#{user_id}> #{COINS} MOF 送金しましたよ〜\nhttps://ropsten.etherscan.io/tx/#{transaction.id}"
     else
-      message = "<@#{user_id}> イーサリアムのアドレスはまだ登録されてないようですね〜\n`/register ADDRESS`を実行して登録しましょう！"
+      message = "<@#{user_id}> イーサリアムのアドレスはまだ登録されてないようですね〜\n`@mof-coin register 自分のRopstenアドレス` を送信して登録しましょう！"
     end
 
     SlackBot.instance.send_message(channel: channel, message: message)
