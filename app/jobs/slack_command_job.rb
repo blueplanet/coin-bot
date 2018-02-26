@@ -6,11 +6,12 @@ class SlackCommandJob < ApplicationJob
 
     case command
     when 'send_to'
-      # generate_transaction(user, command_args.first, command_args.second, command_args.third)
-      # url = new_transaction_path(from: , to: , amount: )
-      # message = "下記リンクをクリックし、Metamaskでサインしてください〜\n#{url}"
+      from_user = SlackUser.find_by(team_id: team_id, user_id: user)
+      to_user = SlackUser.find_by(team_id: team_id, user_id: command_args.first)
+      url = new_transaction_path(from: , to: , amount: )
+      message = "下記リンクをクリックし、Metamaskでサインしてください〜\n#{url}"
 
-      SlackBot.instance.send_message(channel: channel, message: 'test')
+      SlackBot.instance.send_message(channel: channel, message: message)
     when 'balance'
       GetBalanceJob.perform_later(team_id, user, channel)
     when 'register'
@@ -24,4 +25,9 @@ class SlackCommandJob < ApplicationJob
       SlackBot.instance.send_message(channel: channel, message: message)
     end
   end
+
+  private
+
+    def parse_user_id(to_user_arg)
+    end
 end
