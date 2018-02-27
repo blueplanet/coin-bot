@@ -5,7 +5,7 @@ window.addEventListener('load', function() {
 
     web3.version.getNetwork((err, netId) => {
       switch (netId) {
-        case "2":
+        case "3":
           console.log('This is the ropsten test network.')
           break
         default:
