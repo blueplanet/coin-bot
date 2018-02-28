@@ -21,7 +21,8 @@ class EventsController < ActionController::API
           params[:team_id],
           params[:event][:user],
           params[:event][:channel],
-          params[:event][:text]
+          params[:event][:text],
+          params[:event][:ts]
         )
       end
 

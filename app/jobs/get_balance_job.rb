@@ -1,7 +1,7 @@
 class GetBalanceJob < ApplicationJob
   queue_as :default
 
-  def perform(team_id, user_id, channel)
+  def perform(team_id, user_id, channel, ts)
     slack_user = SlackUser.find_by(team_id: team_id, user_id: user_id)
 
     if slack_user
@@ -11,7 +11,7 @@ class GetBalanceJob < ApplicationJob
       message = "<@#{user_id}> アドレスはまだ登録されてないようです〜\n`@mof-coin register 自分のRopstenアドレス` を送信して登録しましょう！"
     end
 
-    SlackBot.instance.send_message(channel: channel, message: message)
+    SlackBot.instance.send_message(channel: channel, message: message, ts: ts)
   end
 
   private
