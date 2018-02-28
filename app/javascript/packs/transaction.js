@@ -19,7 +19,7 @@ window.addEventListener('load', function() {
     form.addEventListener('submit', function(e) {
       e.preventDefault();
       
-      
+      web3.
     });
   } else {
     alert('MetaMask をインストールしてください');
