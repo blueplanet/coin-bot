@@ -2,7 +2,8 @@
   "name": "coin_bot",
   "private": true,
   "dependencies": {
-    "@rails/webpacker": "^3.2.2"
+    "@rails/webpacker": "^3.2.2",
+    "ethjs": "^0.3.3"
   },
   "devDependencies": {
     "webpack-dev-server": "^3.0.0"
