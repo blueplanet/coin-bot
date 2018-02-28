@@ -10,7 +10,8 @@ class EventsController < ActionController::API
       ReactionAddedJob.perform_later(
         params[:team_id],
         params[:event][:item_user],
-        params[:event][:item][:channel]
+        params[:event][:item][:channel],
+        params[:event][:item][:ts]
       )
 
       head :ok
