@@ -4,7 +4,7 @@ const eth = new Eth(new Eth.HttpProvider('https://ropsten.infura.io'));
 const erc20ABI = [{ "constant": true, "inputs": [], "name": "name", "outputs": [ { "name": "", "type": "string" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "_spender", "type": "address" }, { "name": "_value", "type": "uint256" } ], "name": "approve", "outputs": [ { "name": "", "type": "bool" } ], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "totalSupply", "outputs": [ { "name": "", "type": "uint256" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "_from", "type": "address" }, { "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" } ], "name": "transferFrom", "outputs": [ { "name": "", "type": "bool" } ], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [], "name": "decimals", "outputs": [ { "name": "", "type": "uint256" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "_spender", "type": "address" }, { "name": "_subtractedValue", "type": "uint256" } ], "name": "decreaseApproval", "outputs": [ { "name": "", "type": "bool" } ], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [ { "name": "_owner", "type": "address" } ], "name": "balanceOf", "outputs": [ { "name": "balance", "type": "uint256" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": true, "inputs": [], "name": "symbol", "outputs": [ { "name": "", "type": "string" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "constant": false, "inputs": [ { "name": "_to", "type": "address" }, { "name": "_value", "type": "uint256" } ], "name": "transfer", "outputs": [ { "name": "", "type": "bool" } ], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": false, "inputs": [ { "name": "_spender", "type": "address" }, { "name": "_addedValue", "type": "uint256" } ], "name": "increaseApproval", "outputs": [ { "name": "", "type": "bool" } ], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [ { "name": "_owner", "type": "address" }, { "name": "_spender", "type": "address" } ], "name": "allowance", "outputs": [ { "name": "", "type": "uint256" } ], "payable": false, "stateMutability": "view", "type": "function" }, { "inputs": [ { "name": "initialSupply", "type": "uint256" } ], "payable": false, "stateMutability": "nonpayable", "type": "constructor" }, { "anonymous": false, "inputs": [ { "indexed": true, "name": "owner", "type": "address" }, { "indexed": true, "name": "spender", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" } ], "name": "Approval", "type": "event" }, { "anonymous": false, "inputs": [ { "indexed": true, "name": "from", "type": "address" }, { "indexed": true, "name": "to", "type": "address" }, { "indexed": false, "name": "value", "type": "uint256" } ], "name": "Transfer", "type": "event" } ];
 const mofCoinAddress = '0x93F42602d8448d81E426FB2C38369179790c3E4A';
 
-window.addEventListener('load', function() {
+window.addEventListener('load', () => {
   if (typeof window.web3 !== 'undefined' && typeof window.web3.currentProvider !== 'undefined') {
     eth.setProvider(window.web3.currentProvider);
     window.eth = eth;
@@ -13,10 +13,23 @@ window.addEventListener('load', function() {
 
     eth.accounts().then((accounts) => {
       window.eth.defaultAccount = accounts[0];
-      this.document.querySelector('#from-address').value = eth.defaultAccount;
+      el('#from-address').value = eth.defaultAccount;
 
-      token.balanceOf(eth.defaultAccount).then((balance) => {
-        document.querySelector('#balance').textContent = unit.fromWei(balance[0], 'ether');
+      token.balanceOf('0x2Cf9e40A1d1190E40256Ff415930C2037982A59e').then((balance) => {
+        el('#balance').textContent = unit.fromWei(balance[0], 'ether');
+      });
+    });
+
+    const submitButton = el('#submit');
+    submitButton.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      token.transfer(el('#from-address').value, el('#amount').value * 1e18, { from: eth.defaultAccount })
+      .then(function(transferTxHash) {
+        el('#transfer-response').innerHTML = 'Transfering tokens with transaction hash: ' + String(transferTxHash);
+      })
+      .catch(function(transferError) {
+        el('#transfer-response').innerHTML = 'Hmm.. there was an error: ' + String(transferError);
       });
     });
 
@@ -28,3 +41,5 @@ window.addEventListener('load', function() {
 });
 
 // TODO: アカウント変更監視
+
+const el = function(id){ return document.querySelector(id); };

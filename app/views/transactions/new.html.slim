@@ -11,14 +11,15 @@
           input#from-address.form-control type='text' placeholder='Loading...' disabled='disabled'
         .form-group
           label To
-          input#to-address.form-control type='text' placeholder='Loading...' disabled='disabled'
+          input#to-address.form-control type='text' placeholder='Loading...' disabled='disabled' value='0x2Cf9e40A1d1190E40256Ff415930C2037982A59e'
         .form-group
           label Amount
-          input.form-control type='text' placeholder='amount'
+          input#amount.form-control type='text' placeholder='amount' value='5'
           small.form-text
             span> Balance: 
             span#balance 0
             span< MOF
         .form-group
-          button.btn.btn-primary type='submit' 送金する
+          button#submit.btn.btn-primary type='submit' 送金する
+      #transfer-response
 
