@@ -15,7 +15,7 @@ window.addEventListener('load', () => {
       window.eth.defaultAccount = accounts[0];
       el('#from-address').value = eth.defaultAccount;
 
-      token.balanceOf('0x2Cf9e40A1d1190E40256Ff415930C2037982A59e').then((balance) => {
+      token.balanceOf(eth.defaultAccount).then((balance) => {
         el('#balance').textContent = unit.fromWei(balance[0], 'ether');
       });
     });
@@ -24,7 +24,7 @@ window.addEventListener('load', () => {
     submitButton.addEventListener('click', (e) => {
       e.preventDefault();
 
-      token.transfer(el('#from-address').value, el('#amount').value * 1e18, { from: eth.defaultAccount })
+      token.transfer(el('#to-address').value, el('#amount').value * 1e18, { from: eth.defaultAccount })
       .then(function(transferTxHash) {
         el('#transfer-response').innerHTML = 'Transfering tokens with transaction hash: ' + String(transferTxHash);
       })
