@@ -8,14 +8,17 @@
       form#transaction-form.card-body
         .form-group
           label From
-          input.form-control type='text' placeholder='From'
+          input#from-address.form-control type='text' placeholder='Loading...' disabled='disabled'
         .form-group
           label To
-          input.form-control type='text' placeholder='to'
+          input#to-address.form-control type='text' placeholder='Loading...' disabled='disabled'
         .form-group
           label Amount
           input.form-control type='text' placeholder='amount'
-          small.form-text Balance: 5 MOF
+          small.form-text
+            span> Balance: 
+            span#balance 0
+            span< MOF
         .form-group
           button.btn.btn-primary type='submit' 送金する
 
