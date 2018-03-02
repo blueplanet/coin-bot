@@ -52,6 +52,13 @@ const displayAccount = function(token) {
   el('#from-address').value = eth.defaultAccount;
 
   token.balanceOf(eth.defaultAccount).then((balance) => {
-    el('#balance').textContent = unit.fromWei(balance[0], 'ether');
+    let balanceInt = unit.fromWei(balance[0], 'ether');
+    el('#balance').textContent = balance;
+
+    if (balanceInt > parseInt(el('#amount').value)) {
+      el('#submit').removeClass('disabled');
+    } else {
+      el('#submit').addClass('disabled');
+    }
   });
 }

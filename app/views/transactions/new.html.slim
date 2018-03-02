@@ -7,19 +7,19 @@
       .card-header MOF送金
       form#transaction-form.card-body
         .form-group
-          label From
+          label 送金元
           input#from-address.form-control type='text' placeholder='Loading...' disabled='disabled'
         .form-group
-          label To
-          input#to-address.form-control type='text' placeholder='Loading...' disabled='disabled' value='0x2Cf9e40A1d1190E40256Ff415930C2037982A59e'
+          label 送金先
+          input#to-address.form-control type='text' placeholder='Loading...' disabled='disabled'
         .form-group
-          label Amount
-          input#amount.form-control type='text' placeholder='amount' value='5'
+          label 金額
+          input#amount.form-control type='text' placeholder='amount' disabled='disabled'
           small.form-text
-            span> Balance: 
+            span> 残高：
             span#balance 0
             span< MOF
         .form-group
-          button#submit.btn.btn-primary type='submit' 送金する
+          button#submit.btn.btn-primary.disabled type='submit' 送金する
       #transfer-response
 
