@@ -8,13 +8,13 @@
       form#transaction-form.card-body
         .form-group
           label 送金元
-          input#from-address.form-control type='text' placeholder='Loading...' disabled='disabled'
+          input#from-address.form-control type='text' disabled='disabled' value=@from_user.address
         .form-group
           label 送金先
-          input#to-address.form-control type='text' placeholder='Loading...' disabled='disabled'
+          input#to-address.form-control type='text' disabled='disabled' value=@to_user.address
         .form-group
           label 金額
-          input#amount.form-control type='text' placeholder='amount' disabled='disabled'
+          input#amount.form-control type='text' disabled='disabled' value=@amount
           small.form-text
             span> 残高：
             span#balance 0

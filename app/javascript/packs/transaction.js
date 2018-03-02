@@ -24,10 +24,10 @@ window.addEventListener('load', () => {
 
       token.transfer(el('#to-address').value, el('#amount').value * 1e18, { from: eth.defaultAccount })
       .then(function(transferTxHash) {
-        el('#transfer-response').innerHTML = 'Transfering tokens with transaction hash: ' + String(transferTxHash);
+        el('#transfer-response').innerHTML = String(transferTxHash);
       })
       .catch(function(transferError) {
-        el('#transfer-response').innerHTML = 'Hmm.. there was an error: ' + String(transferError);
+        el('#transfer-response').innerHTML = '送信エラー: ' + String(transferError);
       });
     });
 
@@ -53,7 +53,7 @@ const displayAccount = function(token) {
 
   token.balanceOf(eth.defaultAccount).then((balance) => {
     let balanceInt = unit.fromWei(balance[0], 'ether');
-    el('#balance').textContent = balance;
+    el('#balance').textContent = balanceInt;
 
     if (balanceInt > parseInt(el('#amount').value)) {
       el('#submit').removeClass('disabled');
