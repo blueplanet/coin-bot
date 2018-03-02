@@ -12,12 +12,10 @@ window.addEventListener('load', () => {
     const token = eth.contract(erc20ABI).at(mofCoinAddress);
 
     eth.accounts().then((accounts) => {
-      window.eth.defaultAccount = accounts[0];
-      el('#from-address').value = eth.defaultAccount;
-
-      token.balanceOf(eth.defaultAccount).then((balance) => {
-        el('#balance').textContent = unit.fromWei(balance[0], 'ether');
-      });
+      if (accounts.length == 0) {
+        alert('MetaMaskをアンロックしてください');
+        return;
+      }
     });
 
     const submitButton = el('#submit');
@@ -33,6 +31,15 @@ window.addEventListener('load', () => {
       });
     });
 
+    let accountInterval = setInterval(function() {
+      window.eth.accounts().then((accounts) => {
+        if (accounts[0] !== window.eth.defaultAccount) {
+          window.eth.defaultAccount = web3.eth.accounts[0];
+          displayAccount(token);
+        }
+      });
+    }, 100);
+
   } else {
     alert('MetaMask をインストールしてください');
 
@@ -40,6 +47,11 @@ window.addEventListener('load', () => {
   }
 });
 
-// TODO: アカウント変更監視
-
 const el = function(id){ return document.querySelector(id); };
+const displayAccount = function(token) {
+  el('#from-address').value = eth.defaultAccount;
+
+  token.balanceOf(eth.defaultAccount).then((balance) => {
+    el('#balance').textContent = unit.fromWei(balance[0], 'ether');
+  });
+}
