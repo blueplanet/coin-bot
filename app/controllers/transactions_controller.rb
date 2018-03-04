@@ -4,6 +4,7 @@ class TransactionsController < ApplicationController
   def new
     @from_user = SlackUser.find(params[:from_user_id])
     @to_user = SlackUser.find(params[:to_user_id])
+    @amount = params[:amount]
   end
 
   private

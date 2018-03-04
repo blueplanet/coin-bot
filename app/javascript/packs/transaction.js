@@ -22,7 +22,7 @@ window.addEventListener('load', () => {
     submitButton.addEventListener('click', (e) => {
       e.preventDefault();
 
-      token.transfer(el('#to-address').value, el('#amount').value * 1e18, { from: eth.defaultAccount })
+      token.transfer(el('#to-address').dataset.address, el('#amount').value * 1e18, { from: el('#from-address').dataset.address })
       .then(function(transferTxHash) {
         el('#transfer-response').innerHTML = String(transferTxHash);
       })
@@ -49,16 +49,16 @@ window.addEventListener('load', () => {
 
 const el = function(id){ return document.querySelector(id); };
 const displayAccount = function(token) {
-  el('#from-address').value = eth.defaultAccount;
+  el('#from-address').dataset.address = eth.defaultAccount;
 
   token.balanceOf(eth.defaultAccount).then((balance) => {
     let balanceInt = unit.fromWei(balance[0], 'ether');
     el('#balance').textContent = balanceInt;
 
     if (balanceInt > parseInt(el('#amount').value)) {
-      el('#submit').removeClass('disabled');
+      el('#submit').classList.remove('disabled');
     } else {
-      el('#submit').addClass('disabled');
+      el('#submit').classList.add('disabled');
     }
   });
 }

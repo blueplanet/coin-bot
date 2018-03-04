@@ -12,4 +12,11 @@ class SlackBot
   def send_message(channel: , message: )
     @bot.chat_postMessage(as_user: 'true', channel: channel, text: message)
   end
+
+  def user_name(slack_user: )
+    response = @bot.users_info(user: slack_user.user_id)
+    response.user.name
+  rescue Slack::Web::Api::Errors::SlackError
+    slack_user.address
+  end
 end

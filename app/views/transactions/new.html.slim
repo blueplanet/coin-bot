@@ -8,10 +8,10 @@
       form#transaction-form.card-body
         .form-group
           label 送金元
-          input#from-address.form-control type='text' disabled='disabled' value=@from_user.address
+          input#from-address.form-control type='text' disabled='disabled' data-address=@from_user.address value=SlackBot.instance.user_name(slack_user: @from_user)
         .form-group
           label 送金先
-          input#to-address.form-control type='text' disabled='disabled' value=@to_user.address
+          input#to-address.form-control type='text' disabled='disabled' data-address=@to_user.address value=SlackBot.instance.user_name(slack_user: @to_user)
         .form-group
           label 金額
           input#amount.form-control type='text' disabled='disabled' value=@amount
