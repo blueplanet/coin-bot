@@ -1,16 +1,19 @@
 class SlackCommandJob < ApplicationJob
   queue_as :default
 
+  include Rails.application.routes.url_helpers
+
   def perform(team_id, user, channel, text, ts)
     _, command, *command_args = text.split
 
     case command
     when 'send_to'
-      # generate_transaction(user, command_args.first, command_args.second, command_args.third)
-      # url = new_transaction_path(from: , to: , amount: )
-      # message = "下記リンクをクリックし、Metamaskでサインしてください〜\n#{url}"
+      from_user = SlackUser.find_by(team_id: team_id, user_id: user)
+      to_user = SlackUser.find_by(team_id: team_id, user_id: parse_user_id(command_args.first))
+      url = new_transaction_url(from_user_id: from_user.id, to_user_id: to_user.id, amount: command_args.second)
+      message = "下記リンクをクリックし、Metamaskでサインしてください〜\n#{url}"
 
-      SlackBot.instance.send_message(channel: channel, message: 'test')
+      SlackBot.instance.send_message(channel: channel, message: message)
     when 'balance'
       GetBalanceJob.perform_later(team_id, user, channel, ts)
     when 'register'
@@ -21,7 +24,14 @@ class SlackCommandJob < ApplicationJob
       `@mof-coin register 自分のRopstenアドレス` アドレス登録
       `@mof-coin balance` 残高表示
       EOS
+
       SlackBot.instance.send_message(channel: channel, message: message, ts: ts)
     end
   end
+
+  private
+
+    def parse_user_id(to_user_arg)
+      to_user_arg.match(/^<@(.*)>$/)[1]
+    end
 end

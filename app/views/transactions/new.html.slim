@@ -1,0 +1,25 @@
+= javascript_pack_tag 'transaction'
+
+.row
+  .col-3
+  .col-6
+    .card
+      .card-header MOF送金
+      form#transaction-form.card-body
+        .form-group
+          label 送金元
+          input#from-address.form-control type='text' disabled='disabled' data-address=@from_user.address value=SlackBot.instance.user_name(slack_user: @from_user)
+        .form-group
+          label 送金先
+          input#to-address.form-control type='text' disabled='disabled' data-address=@to_user.address value=SlackBot.instance.user_name(slack_user: @to_user)
+        .form-group
+          label 金額
+          input#amount.form-control type='text' disabled='disabled' value=@amount
+          small.form-text
+            span> 残高：
+            span#balance 0
+            span< MOF
+        .form-group
+          button#submit.btn.btn-primary.disabled type='submit' 送金する
+      #transfer-response
+
