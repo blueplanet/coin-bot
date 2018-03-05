@@ -1,6 +1,6 @@
 class ApplicationJob < ActiveJob::Base
 
-  private
+  protected
 
     def default_url_options
       { host: ENV['HOST_NAME'] }
