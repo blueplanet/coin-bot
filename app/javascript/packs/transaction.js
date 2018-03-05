@@ -24,10 +24,14 @@ window.addEventListener('load', () => {
 
       token.transfer(el('#to-address').dataset.address, el('#amount').value * 1e18, { from: el('#from-address').dataset.address })
       .then(function(transferTxHash) {
-        el('#transfer-response').innerHTML = String(transferTxHash);
+        alert('送金しました!')
+
+        location.href = 'https://ropsten.etherscan.io/tx/' + transferTxHash;
       })
       .catch(function(transferError) {
-        el('#transfer-response').innerHTML = '送信エラー: ' + String(transferError);
+        alert('送金処理でエラーが発生しました。')
+
+        console.log(transferError);
       });
     });
 
