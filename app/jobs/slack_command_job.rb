@@ -10,7 +10,7 @@ class SlackCommandJob < ApplicationJob
     when 'send_to'
       from_user = SlackUser.find_by(team_id: team_id, user_id: user)
       to_user = SlackUser.find_by(team_id: team_id, user_id: parse_user_id(command_args.first))
-      url = new_transaction_path(from_user_id: from_user.id, to: to_user.id, amount: command_args.second)
+      url = new_transaction_url(from_user_id: from_user.id, to_user_id: to_user.id, amount: command_args.second)
       message = "下記リンクをクリックし、Metamaskでサインしてください〜\n#{url}"
 
       SlackBot.instance.send_message(channel: channel, message: message)
