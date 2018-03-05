@@ -1,6 +1,8 @@
 class SlackCommandJob < ApplicationJob
   queue_as :default
 
+  include Rails.application.routes.url_helpers
+
   def perform(team_id, user, channel, text)
     _, command, *command_args = text.split
 
@@ -22,6 +24,7 @@ class SlackCommandJob < ApplicationJob
       `@mof-coin register 自分のRopstenアドレス` アドレス登録
       `@mof-coin balance` 残高表示
       EOS
+
       SlackBot.instance.send_message(channel: channel, message: message)
     end
   end
