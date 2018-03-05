@@ -7,7 +7,7 @@ class SlackCommandJob < ApplicationJob
     case command
     when 'send_to'
       from_user = SlackUser.find_by(team_id: team_id, user_id: user)
-      to_user = SlackUser.find_by(team_id: team_id, user_id: parse_user_id(command_args.first))k
+      to_user = SlackUser.find_by(team_id: team_id, user_id: parse_user_id(command_args.first))
       url = new_transaction_path(from_user_id: from_user.id, to: to_user.id, amount: command_args.second)
       message = "下記リンクをクリックし、Metamaskでサインしてください〜\n#{url}"
 
@@ -29,6 +29,6 @@ class SlackCommandJob < ApplicationJob
   private
 
     def parse_user_id(to_user_arg)
-      to_user.match(/^<@(.*)>$/)[1]
+      to_user_arg.match(/^<@(.*)>$/)[1]
     end
 end
