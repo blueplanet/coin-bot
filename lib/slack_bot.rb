@@ -9,8 +9,8 @@ class SlackBot
     @bot = Slack::Web::Client.new
   end
 
-  def send_message(channel: , message: )
-    @bot.chat_postMessage(as_user: 'true', channel: channel, text: message)
+  def send_message(channel: , message: , ts: nil)
+    @bot.chat_postMessage(as_user: 'true', channel: channel, text: message, thread_ts: ts)
   end
 
   def user_name(slack_user: )

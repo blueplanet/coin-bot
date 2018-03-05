@@ -3,7 +3,7 @@ class SlackCommandJob < ApplicationJob
 
   include Rails.application.routes.url_helpers
 
-  def perform(team_id, user, channel, text)
+  def perform(team_id, user, channel, text, ts)
     _, command, *command_args = text.split
 
     case command
@@ -15,9 +15,9 @@ class SlackCommandJob < ApplicationJob
 
       SlackBot.instance.send_message(channel: channel, message: message)
     when 'balance'
-      GetBalanceJob.perform_later(team_id, user, channel)
+      GetBalanceJob.perform_later(team_id, user, channel, ts)
     when 'register'
-      RegisterAddressJob.perform_later(team_id, user, command_args.first, channel)
+      RegisterAddressJob.perform_later(team_id, user, command_args.first, channel, ts)
     else
       message = <<~EOS
       下記のコマンド実行できます。
@@ -25,7 +25,7 @@ class SlackCommandJob < ApplicationJob
       `@mof-coin balance` 残高表示
       EOS
 
-      SlackBot.instance.send_message(channel: channel, message: message)
+      SlackBot.instance.send_message(channel: channel, message: message, ts: ts)
     end
   end
 
